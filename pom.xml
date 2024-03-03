@@ -192,7 +192,6 @@
     <module>modules/core</module>
     <module>modules/cli-wrapper</module>
     <module>modules/rest-api</module>
-    <module>modules/webapp</module>
   </modules>
 
   <build>
@@ -247,6 +246,21 @@
             </execution>
           </executions>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>3.4.0</version>
+          <inherited>false</inherited>
+          <executions>
+            <execution>
+              <id>show-active-profiles</id>
+              <phase>compile</phase>
+              <goals>
+                <goal>active-profiles</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -275,6 +289,30 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-help-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>with-frontend-app</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>modules/webapp</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>without-frontend-app</id>
+      <activation>
+        <property>
+          <name>no-frontend-app</name>
+        </property>
+      </activation>
+    </profile>
+  </profiles>
 </project>
